@@ -4,3 +4,4 @@ desktop.ini
 *.gdoc
 *.gsheet
 *.gslides
+venv/
