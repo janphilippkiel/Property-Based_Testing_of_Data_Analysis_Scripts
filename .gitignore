@@ -5,3 +5,4 @@ desktop.ini
 *.gsheet
 *.gslides
 venv/
+code/.hypothesis
