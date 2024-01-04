@@ -7,3 +7,4 @@ desktop.ini
 venv/
 code/.hypothesis
 __pycache__
+.vscode
