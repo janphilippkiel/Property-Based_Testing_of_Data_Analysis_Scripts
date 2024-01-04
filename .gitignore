@@ -6,3 +6,4 @@ desktop.ini
 *.gslides
 venv/
 code/.hypothesis
+.vscode
