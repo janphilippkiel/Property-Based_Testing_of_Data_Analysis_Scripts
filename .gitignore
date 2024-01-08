@@ -4,3 +4,7 @@ desktop.ini
 *.gdoc
 *.gsheet
 *.gslides
+venv/
+code/.hypothesis
+__pycache__
+.vscode
