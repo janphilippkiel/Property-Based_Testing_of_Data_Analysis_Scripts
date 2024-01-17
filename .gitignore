@@ -6,4 +6,5 @@ desktop.ini
 *.gslides
 venv/
 code/.hypothesis
+__pycache__
 .vscode
