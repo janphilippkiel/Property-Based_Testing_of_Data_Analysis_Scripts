@@ -27,6 +27,7 @@
 %
 \title{Property-Based Testing of Data Analysis Scripts}
 \subtitle{A Focus on Hypothesis for Python}
+%\subtitle{Enhancing Reliability in DLR Research}  % Alternative subtitle
 %
 %\titlerunning{Abbreviated paper title}
 % If the paper title is too long for the running head, you can set
@@ -54,18 +55,11 @@ This paper explores property-based testing as a method to ensure data analysis s
 %
 % [Page 1]
 \section{Introduction}
-\begin{itemize}
-  \item Briefly introduce the context of data analysis in DLR and the challenges associated with traditional testing approaches.
-  \item Highlight the need for property-based testing in scenarios with large possible value ranges.\cite{MacIver2019}
-\end{itemize}
+In the evolving landscape of data analysis, the complexity and volume of datasets have grown exponentially, presenting unique challenges across various fields. This surge in data complexity necessitates robust testing methodologies to ensure the accuracy and reliability of data analysis tools and scripts. Traditional testing approaches, primarily based on specific input-output cases, often fall short in addressing the dynamic and unpredictable nature of modern datasets. These limitations are particularly evident in specialized fields like aerospace research, where the data's scope and diversity are exceptionally vast.
 
 % [Page 1-2]
 \section{Background}
-\begin{itemize}
-  \item Discuss the common data analysis tools used by DLR researchers (Python, Pandas, Matplotlib).
-  \item Explain the challenges of writing tests for data analysis scripts.
-  \item Emphasize the importance of confidence in the face of unknown data.
-\end{itemize}
+Within the German Aerospace Center (DLR), the reliability of data analysis scripts is a cornerstone of successful research outcomes. DLR researchers frequently use Python \cite{Kurnatowski2020}, along with its powerful libraries like Pandas and Matplotlib, for complex data manipulations and visualizations. This introduces significant testing challenges. DLR, being at the forefront of aerospace research and development, deals with an enormous range of data variables, from satellite imagery to flight dynamics. This variety and complexity of data make testing particularly challenging. This paper explores the adoption of property-based testing, presenting it as an innovative and essential strategy to overcome these testing challenges, especially in scenarios involving large possible value ranges of data.
 
 % [Pages 2-5]
 \section{Overview of Property-Based Testing}
