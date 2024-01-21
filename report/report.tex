@@ -55,78 +55,77 @@ This paper explores property-based testing as a method to ensure data analysis s
 %
 % [Page 1]
 \section{Introduction}
-In the evolving landscape of data analysis, the complexity and volume of datasets have grown exponentially, presenting unique challenges across various fields. This surge in data complexity necessitates robust testing methodologies to ensure the accuracy and reliability of data analysis tools and scripts. Traditional testing approaches, primarily based on specific input-output cases, often fall short in addressing the dynamic and unpredictable nature of modern datasets. These limitations are particularly evident in specialized fields like aerospace research, where the data's scope and diversity are exceptionally vast.
+In the evolving landscape of data analysis, the complexity and volume of datasets have grown exponentially~\cite{Taylor2023}, presenting unique challenges across various fields. This surge in data complexity necessitates robust testing methodologies to ensure the accuracy and reliability of data analysis tools and scripts. Traditional testing approaches, primarily based on specific input-output cases, often fall short in addressing the dynamic and unpredictable nature of modern datasets. These limitations are particularly evident in specialized fields like aerospace research, where the data's scope and diversity are exceptionally vast.
 
 % [Page 1-2]
 \section{Background}
-Within the German Aerospace Center (DLR), the reliability of data analysis scripts is a cornerstone of successful research outcomes. DLR researchers frequently use Python \cite{Kurnatowski2020}, along with its powerful libraries like Pandas and Matplotlib, for complex data manipulations and visualizations. This introduces significant testing challenges. DLR, being at the forefront of aerospace research and development, deals with an enormous range of data variables, from satellite imagery to flight dynamics. This variety and complexity of data make testing particularly challenging. This paper explores the adoption of property-based testing, presenting it as an innovative and essential strategy to overcome these testing challenges, especially in scenarios involving large possible value ranges of data.
+Within the German Aerospace Center (DLR), the reliability of data analysis scripts is a cornerstone of successful research outcomes. DLR researchers frequently use Python~\cite{Kurnatowski2020}, along with its powerful libraries like Pandas\footnote{https://pandas.pydata.org/, accessed: 21.01.2024} and Matplotlib\footnote{https://matplotlib.org/, accessed: 21.01.2024}, for complex data manipulations and visualizations. This introduces significant testing challenges. DLR, being at the forefront of aerospace research and development, deals with an enormous range of data variables, from satellite imagery to flight dynamics.\footnote{https://www.dlr.de/en/dlr/about-us, accessed: 21.01.2024} This variety and complexity of data make testing particularly challenging. This paper explores the adoption of property-based testing, presenting it as an innovative and essential strategy to overcome these testing challenges, especially in scenarios involving large possible value ranges of data.
 
-% [Pages 2-5]
-\section{Overview of Property-Based Testing}
-\subsection{History of Property-Based Testing}
-\begin{itemize}
-  \item Trace the historical development of property-based testing.
-\end{itemize}
+\section{Method}
 
-\subsection{How Property-Based Testing Works}
-\begin{itemize}
-  \item Explain the core concept of property-based testing.
-  \item Discuss the idea of defining invariants for functions.
-\end{itemize}
+\section{Results}
+\subsection{Overview of Property-Based Testing}
+\subsubsection{History of Property-Based Testing}
+The origins of property-based testing (PBT) can be traced back more than 20 years ago, even before 2000. Although it had already been a topic within information technology research like in Goldreich (1998) and Fink (1997), it gained much more attention through the development of QuickCheck\footnote{https://www.cse.chalmers.se/~rjmh/QuickCheck/, accessed: 21.01.2024}~\cite{Shi2023,Fink1997,MacIver2019,Honarvar2020}. Beginning with research questions concerning topics like automation of test input generation and automated techniques in general~\cite{Fink1997} and guiding the automated input generator towards values with higher probability of failure~\cite{Loescher2017}, more recent papers deal with the implementation of different frameworks or platforms and techniques of PBT-application~\cite{Padhye2019,Honarvar2020,Shi2023,Corgozinho2023}. To top it off, PBT already enjoys wide-ranging support in different programming languages including automation capabilities~\cite{Chen2022,Padhye2019,Honarvar2020,ElazarMittelman2023,Shi2023}, as well as the application within many different python projects~\cite{Corgozinho2023}.
 
-\subsection{Main Use Cases}
-\begin{itemize}
-  \item Explore various scenarios where property-based testing is particularly useful.
-  \item Discuss how it complements traditional testing approaches.
-\end{itemize}
+\subsubsection{How Property-Based Testing Works}
+PBT is a method enabling the formal verification of a software~\cite{Chen2022,Fink1997,Honarvar2020,Paraskevopoulou2015}, with the key concept of validating high-level or general properties of a software~\cite{Fink1997,Loescher2017,Honarvar2020,Corgozinho2023}. Test cases used within the application of this method, are usually formulated using logical descriptions of a software's expected behaviour~\cite{Chen2022,Fink1997,Honarvar2020,Loescher2017,Corgozinho2023}. More explicitly, these tests may include pre- or post-conditions of the system~\cite{Honarvar2020}. In order to provide formal validation of the system's behaviour, a single test case is executed many times with randomly generated input in search for counterexamples resulting in violation of a specific property or even a crash of a software, therefore invalidating said property~\cite{Chen2022,Loescher2017,Padhye2019,ElazarMittelman2023,Paraskevopoulou2015,Corgozinho2023}. For randomly generating input, data generators are used~\cite{Chen2022,Loescher2017,Padhye2019,ElazarMittelman2023} which can be adjusted according to "domain-specific knowledge"~\cite{Chen2022}. Through this automated execution of tests with random input PBT tries to approximate the validity of a certain property, as it has to withstand the check using many different instantiations within a given input range or otherwise the property is falsified~\cite{Fink1997,ElazarMittelman2023,Corgozinho2023,Paraskevopoulou2015}. To further elaborate on the properties, which represent the desired behaviour in terms of input / output of given tested functions through specifications~\cite{Chen2022,Fink1997,Loescher2017}, some examples can be given. To start with a simple one, think of a function that adds two numbers (A, B) and returns the sum of both numbers (A + B). Hier ggfs. Beispiel für sortierter Liste einfügen --> Beinhaltet "Invariante" You can define a test which asserts that for any given input for either A and B, the function will return the addition of both numbers~\cite{Corgozinho2023}. Another example which is frequently used for showcasing PBT are binary search trees~\cite{Corgozinho2023,Shi2023}. In PBT "one desirable property [could be], that if we [you] insert a key into a valid BST, then it should remain a valid BST"~\cite{Shi2023}. In the context of PBT you would then use logic expressions for your tests and use a random input generator to check whether the given property is violated. Other possible use cases could be software-security related as example in the case of authentication~\cite{Fink1997} or "the correctness of hardware [and] the external software involved"~\cite{Chen2022}. Long story short, PBT allows for the formal verification of a system's invariants~\cite{Fink1997,ElazarMittelman2023,Corgozinho2023}.
 
-\subsection{Position in the Test Pyramid}
-\begin{itemize}
-  \item Describe where property-based testing fits in the test pyramid.
-\end{itemize}
+\subsubsection{Advantages and Disadvantages of Property-Based Testing}
+As already mentioned, PBT allows to formally validate the correctness of a software by testing specified properties using randomly generated input for each test. However, describing all of a system's expected behaviour in a logical style is paired with reduced feasibility~\cite{Chen2022,Koopman2012}. By applying PBT, required endeavour for formal validation can be lowered~\cite{Hritcu2016,Chen2022,Paraskevopoulou2015}. Moreover, specifications used for PBT might also improve cooperation between software engineers (SE) and software testers in larger projects, as the language used for defining tests is easier to grasp compared to abstract proofs~\cite{Chen2022,Loescher2017}. Besides this, PBT can also be applied to test in "multiple domains"~\cite{Karlsson2019} - to name a few examples next to the given examples of the previous chapter: interfaces~\cite{Karlsson2019,Francisco2013,LamelaSeijas2013}, e.g. by testing invariants regarding the responses of requested URLs of REST-APIs~\cite{Karlsson2019}. Other possible domains are telecom systems~\cite{Arts2006}, file synchronisation services~\cite{Hughes2016} and databases~\cite{Arts2015}. Despite its wide applicability and advantages regarding formal validation, it lowers engineering effort in terms of defining individual test cases as well as input parameters~\cite{Chen2022,Loescher2017,Corgozinho2023} and might as well offer incentives for SEs to design the code to be easily expressed by properties~\cite{Chen2022}. More specifically, when compared to manually written tests like in unit-testing, PBT allows the SE to put more emphasis on ensuring and restoring correctness of the software and less on "defining test case inputs, examples, and scenarios"~\cite{Corgozinho2023}, which is also less "mundane"~\cite{Loescher2017}. It therefore reduces costs related to testing including change induced costs~\cite{Chen2022,Loescher2017}. Furthermore it allows for validating a software based on a much larger range of inputs~\cite{Loescher2017} [Hypothesis for Software Testing Research] and even more creative or sophisticated inputs~\cite{Arts2015}. Therefore PBT complements traditional testing techniques by unveiling yet unknown bugs within even well tested systems~\cite{Arts2015,Hughes2016,Arts2006} and in general, is useful for finding bugs within the implementation of a software and its specifications~\cite{Chen2022,Fink1997,Loescher2017,Paraskevopoulou2015,Claessen2000,Corgozinho2023}.
 
-\subsection{Tools and Programming Languages}
-\begin{itemize}
-  \item Provide an overview of existing property-based testing tools.
-  \item Highlight tools for different programming languages.
-\end{itemize}
+Although PBT offers quite some advantages, it does not come without any disadvantages. Due to the randomness of the input generator provided by tools the chances of finding more specific bugs reduces depending on the portion of erroneous inputs of the entire input range and therefore might fail to unveil errors~\cite{Loescher2017,Padhye2019,ElazarMittelman2023,Shi2023}. Not to mention that an enormous amount of tests processed implies reduced efficiency~\cite{ElazarMittelman2023,Shi2023}, as you try to approximate a formal proof using many randomly picked scenarios~\cite{Fink1997,ElazarMittelman2023,Paraskevopoulou2015}. Löscher (2017) gave quite a good fictional example using a "system of network nodes"~\cite{Loescher2017}. They tried to falsify the property that for any input scenarios (graphs created), the longest of the shortest paths "between the sink and other nodes [...] should not exceed 21 hops"~\cite{Loescher2017}. Even after "100000 tests"~\cite{Loescher2017} they were not able to falsify the property, which could be done "by hand"~\cite{Loescher2017}. A possible solution to this problem is implied by the usage of individually conceptualised data generators~\cite{Loescher2017,ElazarMittelman2023,Shi2023,Paraskevopoulou2015,Claessen2000} or targeted property-based testing~\cite{Loescher2017}. While constraining data generators by using domain knowledge in order to reduce the e.g. by using pre-conditions to cancel a test~\cite{Loescher2017,ElazarMittelman2023,Shi2023}, targeted property-based testing tries to guide the input generator "with search techniques towards values, that have a higher probability of falsifying a property"~\cite{Loescher2017}. Especially the first mentioned technique comes with its own challenges caused by the required development of your own generators, resulting in a reduced attractiveness of PBT~\cite{Loescher2017,ElazarMittelman2023,Shi2023}.
+
+\subsubsection{Position in the Test Pyramid}
+In order to position PBT at a level of the testing pyramid, we focus on the level of unit and integration (service) testing~\cite{Aniche2022,Radziwill2020}. To the best of our knowledge, PBT has not been applied to test the highest lvl of either system or UI tests~\cite{Radziwill2020,Aniche2022}, thus the highest lvl of the testing pyramid is ignored in discussing the position of PBT within the test pyramid. The relevant levels are now shortly summed up.
+
+Beginning with unit testing, "developers perform unit testing to ensure that each component correctly implements its design and is ready to be integrated into a system of components" [integration testing]. In other words, "testing is performed in isolation from other components" [integration testing] and focuses on "example-based"~\cite{Corgozinho2023} testing of individual parts -- the "smallest parts"~\cite{Aniche2022} -- of a system ~\cite{Hartmann2000,Corgozinho2023}.
+
+Within integration tests, every component of a system is integrated with each other if needed, including relevant external components~\cite{Aniche2022,Hartmann2000,Radziwill2020}. The goal is to ensure that interaction between the given components works correctly and are therefore properly integrated~\cite{Hartmann2000,Aniche2022}.
+
+Although most of the mentioned use cases of chapter 2 (how does PBT work) relate to individual components in the means of functions such as adding numbers, inserting nodes in binary search trees and the sorted list [müssen hier die indirekten Zitate rein?], PBT also offers possible application surrounding the physical and external components of a software~\cite{Chen2022}. Coming back to the authentication-functionality provided by a system, you can not only test the functionality of authentication but also the integration with said authentication services~\cite{Fink1997}. Furthermore PBT has already been applied in many different cases of testing RESTful APIs in the context of OpenAPIs~\cite{Karlsson2019}, telecom systems~\cite{Arts2006}, synchronisation services~\cite{Hughes2016} or AUTOSAR software~\cite{Arts2015}. In the case of QuickREST you can use the response codes in order to differentiate between invalid and URL-requests, which in the end lead to revealing a yet unknown "underspecification"~\cite{Karlsson2019} of a used OpenAPIS documentation~\cite{Karlsson2019}. Whereas in the case of AUTOSAR the testing of correct request processing unveiled a yet unknown bug in terms of task prioritisation~\cite{Arts2015}. Last but not least, entire crashes of addressed components can be perceived as well~\cite{Arts2006}.
+ 
+Therefore the method of PBT can be located within the level of unit and  integration testing. It can be very well applied to testing individual components of a system, but is not limited to it, because testing the integration of components is also possible and is used for both in practice.
+
+\subsubsection{Tools and Programming Languages}
+As already mentioned, PBT enjoys wide ranging support in many different programming languages~\cite{Chen2022,Shi2023}. It is supported by Java (Quicktheories\footnote{https://github.com/quicktheories/QuickTheories, accessed: 21.01.2024}), coq (QuickChick\footnote{https://github.com/QuickChick/QuickChick, accessed: 21.01.2024}), Scala (ScalaCheck\footnote{https://scalacheck.org/, accessed: 21.01.2024}), Erlang (QuickCheck\footnote{http://www.quviq.com/products/erlang-quickcheck/, accessed: 21.01.2024} and PropEr\footnote{https://proper-testing.github.io/, accessed: 21.01.2024}), Haskell (QuickCheck\footnote{https://hackage.haskell.org/package/QuickCheck, accessed: 21.01.2024}), OCaml (QCheck\footnote{https://github.com/c-cube/qcheck/, accessed: 21.01.2024} and Crowbar\footnote{https://github.com/stedolan/crowbar, accessed: 21.01.2024}) to name a few examples~\cite{MacIver2016,Padhye2019,Paraskevopoulou2015,Arts2008,Papadakis2011,Claessen2000}. Obviously many of these tools were inspired by QuickCheck, being the tool popularising PBT. However in this work we focus on Hypothesis\footnote{https://hypothesis.works/, accessed: 21.01.2024}, a PBT implementing framework for Python. It is a framework receiving much attention recently~\cite{Corgozinho2023,MacIver2019}, which is compatible with py.test, unittest and "probably many others", while being open source "under the Mozilla Public License 2.0".\footnote{https://hypothesis.works/products/, accessed: 21.01.2024}
 
 % [Pages 5-7]
-\section{Introduction to Hypothesis for Python}
-\subsection{Overview of Hypothesis}
+\subsection{Introduction to Hypothesis for Python}
+\subsubsection{Overview of Hypothesis}
 \begin{itemize}
   \item Provide a brief introduction to Hypothesis for Python.
   \item Mention its key features and advantages.
 \end{itemize}
 
-\subsection{How to Use Hypothesis}
+\subsubsection{How to Use Hypothesis}
 \begin{itemize}
   \item Write a mini how-to guide on using Hypothesis, including integration with pytest.
   \item Include code snippets for better understanding.
 \end{itemize}
 
 % [Pages 7-9]
-\section{Main Concepts and Features of Hypothesis}
-\subsection{Strategies and Data Generation}
+\subsection{Main Concepts and Features of Hypothesis}
+\subsubsection{Strategies and Data Generation}
 \begin{itemize}
   \item Explain the concept of strategies in Hypothesis for generating test data.
 \end{itemize}
 
-\subsection{Property-Based Testing with pytest}
+\subsubsection{Property-Based Testing with pytest}
 \begin{itemize}
   \item Detail how Hypothesis integrates with pytest.
   \item Provide examples of test functions using Hypothesis.
 \end{itemize}
 
-\subsection{Data Analysis Applications and Benefits}
+\subsubsection{Data Analysis Applications and Benefits}
 \begin{itemize}
   \item Discuss how data analysis applications can benefit from Hypothesis.
   \item Reference specific features, such as the support for NumPy.
 \end{itemize}
 
 % [Pages 9-13]
-\section{Application of Hypothesis in Data Analysis}
-\subsection{Code Examples}
+\subsection{Application of Hypothesis in Data Analysis}
+\subsubsection{Code Examples}
 \begin{itemize}
   \item Provide practical code examples demonstrating the use of Hypothesis in data analysis scripts.
   \item Showcase scenarios where property-based testing adds value.
@@ -164,10 +163,12 @@ Within the German Aerospace Center (DLR), the reliability of data analysis scrip
         return M
 \end{lstlisting}
 
-\subsection{Illustrative Cases}
+\subsubsection{Illustrative Cases}
 \begin{itemize}
   \item Present specific cases where Hypothesis helped discover issues in data analysis scripts.
 \end{itemize}
+
+\section{Discussion}
 
 % [Page 13-14]
 \section{Conclusion}
