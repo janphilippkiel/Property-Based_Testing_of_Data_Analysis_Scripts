@@ -34,8 +34,8 @@
 % an abbreviated paper title here
 %
 \author{Jean-Sebastian de Wet \and
-Jan-Philipp Kiel \and
-Pascal Mager}
+  Jan-Philipp Kiel \and
+  Pascal Mager}
 %
 \authorrunning{Group Criterion}
 % First names are abbreviated in the running head.
@@ -46,9 +46,9 @@ Pascal Mager}
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-This paper explores property-based testing as a method to ensure data analysis scripts' reliability, especially in DLR research using Python, Pandas, and Matplotlib. It outlines challenges with traditional testing in scenarios with diverse data values, emphasizing the need for innovative testing strategies. The paper thoroughly covers property-based testing, including its history, key principles, use cases, and integration in the test pyramid. It then focuses on Hypothesis for Python, a powerful tool for property-based testing, discussing its use, integration with pytest, and unique features. Real-world application is demonstrated with code examples, highlighting how property-based testing, especially with Hypothesis, strengthens data analysis scripts' reliability. The paper concludes by summarizing key findings and emphasizing the crucial role property-based testing, like Hypothesis, plays in boosting researchers' confidence with unknown data.
+  This paper explores property-based testing as a method to ensure data analysis scripts' reliability, especially in DLR research using Python, Pandas, and Matplotlib. It outlines challenges with traditional testing in scenarios with diverse data values, emphasizing the need for innovative testing strategies. The paper thoroughly covers property-based testing, including its history, key principles, use cases, and integration in the test pyramid. It then focuses on Hypothesis for Python, a powerful tool for property-based testing, discussing its use, integration with pytest, and unique features. Real-world application is demonstrated with code examples, highlighting how property-based testing, especially with Hypothesis, strengthens data analysis scripts' reliability. The paper concludes by summarizing key findings and emphasizing the crucial role property-based testing, like Hypothesis, plays in boosting researchers' confidence with unknown data.
 
-\keywords{Property-Based Testing \and Data Analysis Scripts \and Hypothesis \and Python \and pytest \and Reliability \and Test Pyramid \and Code Examples \and DLR Research.}
+  \keywords{Property-Based Testing \and Data Analysis Scripts \and Hypothesis \and Python \and pytest \and Reliability \and Test Pyramid \and Code Examples \and DLR Research.}
 \end{abstract}
 %
 %
@@ -93,7 +93,7 @@ Beginning with unit testing, "developers perform unit testing to ensure that eac
 Within integration tests, every component of a system is integrated with each other if needed, including relevant external components~\cite{Aniche2022,Hartmann2000,Radziwill2020}. The goal is to ensure that interaction between the given components works correctly and are therefore properly integrated~\cite{Hartmann2000,Aniche2022}.
 
 Although most of the mentioned use cases of chapter 2 (how does PBT work) relate to individual components in the means of functions such as adding numbers, inserting nodes in binary search trees and the sorted list [müssen hier die indirekten Zitate rein?], PBT also offers possible application surrounding the physical and external components of a software~\cite{Chen2022}. Coming back to the authentication-functionality provided by a system, you can not only test the functionality of authentication but also the integration with said authentication services~\cite{Fink1997}. Furthermore PBT has already been applied in many different cases of testing RESTful APIs in the context of OpenAPIs~\cite{Karlsson2019}, telecom systems~\cite{Arts2006}, synchronisation services~\cite{Hughes2016} or AUTOSAR software~\cite{Arts2015}. In the case of QuickREST you can use the response codes in order to differentiate between invalid and URL-requests, which in the end lead to revealing a yet unknown "underspecification"~\cite{Karlsson2019} of a used OpenAPIS documentation~\cite{Karlsson2019}. Whereas in the case of AUTOSAR the testing of correct request processing unveiled a yet unknown bug in terms of task prioritisation~\cite{Arts2015}. Last but not least, entire crashes of addressed components can be perceived as well~\cite{Arts2006}.
- 
+
 Therefore the method of PBT can be located within the level of unit and  integration testing. It can be very well applied to testing individual components of a system, but is not limited to it, because testing the integration of components is also possible and is used for both in practice.
 
 \subsubsection{Tools and Programming Languages}
@@ -102,80 +102,308 @@ As already mentioned, PBT enjoys wide ranging support in many different programm
 % [Pages 5-7]
 \subsection{Introduction to Hypothesis for Python}
 \subsubsection{Overview of Hypothesis}
-\begin{itemize}
-  \item Provide a brief introduction to Hypothesis for Python.
-  \item Mention its key features and advantages.
-\end{itemize}
+Hypothesis is a Python library for Property-Based Testing. The focus is on having an easy way to test code with a wide variety of inputs. The main difference when writing test cases in Hypothesis, versus traditional unit tests, is that instead of
+giving concrete input, performing the function, and asserting something about the result, the focus is on trying to make the assertions hold for all data matching a certain specification.
+
+The advantages are that Hypothesis helps to discover edge cases and hidden bugs which were not thought of during typical testing. It also helps to make the tests more robust, seeing as a wide variety of inputs, some even random, are used.
+Furthermore, it can help save time, by encompassing many traditional unit test cases into one PBT test case. And lastly, Hypothesis also integrates into other testing frameworks such as Pytest and nose.
+
+In terms of disadvantages, Hypothesis might lead to longer execution times of test suites. This is due to a Hypothesis test case generating many more subordinate test cases and running them. Although Hypothesis tries to reproduce the input that caused the test case to fail, this might not always work and it can therefore sometimes be challenging to understand why a test case failed.
+Lastly, one typically has less control when using PBT in comparison to a typical unit test \cite{HypothesisDocs}.
+% \begin{itemize}
+%   \item Provide a brief introduction to Hypothesis for Python.
+%   \item Mention its key features and advantages.
+% \end{itemize}
 
 \subsubsection{How to Use Hypothesis}
+To use Hypothesis, start by installing the Python package. This can be done by using the command \texttt{pip install hypothesis}. In this project, the following setup was used:
+
 \begin{itemize}
-  \item Write a mini how-to guide on using Hypothesis, including integration with pytest.
-  \item Include code snippets for better understanding.
+  \item Operating System: Ubuntu 22.04.3 LTS
+  \item Python Version: 3.10.12
+  \item pip Version: 22.0.2
 \end{itemize}
+
+
+However, officially, Hypothesis tries to support the latest version of Python \cite{HypothesisDocs}.
+
+
+Consider the following code snippet:
+\begin{lstlisting}[language=Python]
+  from hypothesis import given
+  import hypothesis.strategies as st
+  
+  @given(st.integers())
+  def test_builtin_abs(x: int) -> None:
+      assert abs(x) >= 0
+      assert abs(x) == (x if x >= 0 else -x)
+\end{lstlisting}
+
+The main way in which the Hypothesis test is annotated, is using the given decorator. The given decorator takes a search strategy object
+and uses this to populate the parameters of the function. A search strategy object refers to how the input for the function should be generated.
+In this case, integers are generated to be used as input to the x parameter of the function.
+
+This function then asserts that certain properties hold for each value of x generated. In this case, it tests that the built-in absolute value function of Hypothesis works
+as it is intended to work.
+
+Another key aspect of Hypothesis is being able to create new, unique search strategies. The following code block
+is an example of this:
+
+\begin{lstlisting}[language=Python]
+  from hypothesis.strategies import composite
+
+  PI = 3.14159
+  
+  @composite
+  def custom_input_generator(draw) -> tuple[float, str]:
+      decimal = draw(st.floats(max_value=PI))
+      text = draw(
+        st.text(alphabet=st.characters
+        (whitelist_categories=['Lu']), 
+      min_size=2, max_size=5))
+      return decimal, text
+  
+  @given(custom_input_generator())
+  def test_custom_input_generator
+          (generated_input: tuple[float, str]) -> None:
+      decimal, text = generated_input
+      assert decimal <= PI
+      assert len(text) >= 2 and len(text) <= 5
+      assert text.isupper()
+  
+\end{lstlisting}
+
+The composite decorator is used to specify a function that generates a custom search strategy.
+The function works by combining existing search strategies. So in the above, the float search strategy
+is used to generate floats up until a max value of PI. Then, the text search strategy is used to generate text
+that consists of only upper-case letters and is between 2 and 5 characters long.
+
+The test function simply tests that the search strategy generation function generates output of the correct form.
+
+% \begin{itemize}
+%   \item Write a mini how-to guide on using Hypothesis, including integration with pytest.
+%   \item Include code snippets for better understanding.
+% \end{itemize}
 
 % [Pages 7-9]
 \subsection{Main Concepts and Features of Hypothesis}
 \subsubsection{Strategies and Data Generation}
-\begin{itemize}
-  \item Explain the concept of strategies in Hypothesis for generating test data.
-\end{itemize}
+One of the main concepts of Hypothesis is the idea of search strategies. Search strategies refer to how hypothesis will
+try to generate input for the test function. Or rather, what it will use to "search" for bugs.
 
-\subsubsection{Property-Based Testing with pytest}
-\begin{itemize}
-  \item Detail how Hypothesis integrates with pytest.
-  \item Provide examples of test functions using Hypothesis.
-\end{itemize}
+Hypothesis has plenty of different search strategies that can be used. For instance, it can generate text, floats, integers, boolean values, a value of a given set of values and values that match a given regex.
+Furthermore, these search strategies can be refined by input parameters. This can for instance, limit the size of the floats generated or allow only dates between date ranges.
+
+The format of using a search strategy in Hypothesis is always the same. Typically, an object representing a search strategy is instantiated using the syntax \texttt{st.(type)}, where \texttt{type} is the specific search strategy to use (e.g., \texttt{text}, \texttt{float}, \texttt{date}). The instantiation can be further refined by specifying parameters. The parameters can for instance, limit the dates to a certain range or only generate floats up to a certain size.
+
+% \begin{itemize}
+%   \item Explain the concept of strategies in Hypothesis for generating test data.
+% \end{itemize}
+
+% \subsubsection{Property-Based Testing with pytest}
+
+% \begin{itemize}
+%   \item Detail how Hypothesis integrates with pytest.
+%   \item Provide examples of test functions using Hypothesis.
+% \end{itemize}
 
 \subsubsection{Data Analysis Applications and Benefits}
-\begin{itemize}
-  \item Discuss how data analysis applications can benefit from Hypothesis.
-  \item Reference specific features, such as the support for NumPy.
-\end{itemize}
+Hypothesis can be used to test data analysis scripts. In particular, Hypothesis can be really helpful to ensure that
+the data preparation and data cleaning steps are properly tested. This is due to Hypothesis being able to simulate
+a wide range of inputs, which can then be used to ensure that the functions are robust.
+
+% \begin{itemize}
+%   \item Discuss how data analysis applications can benefit from Hypothesis.
+%   \item Reference specific features, such as the support for NumPy.
+% \end{itemize}
 
 % [Pages 9-13]
 \subsection{Application of Hypothesis in Data Analysis}
 \subsubsection{Code Examples}
-\begin{itemize}
-  \item Provide practical code examples demonstrating the use of Hypothesis in data analysis scripts.
-  \item Showcase scenarios where property-based testing adds value.
-\end{itemize}
+% \begin{itemize}
+%   \item Provide practical code examples demonstrating the use of Hypothesis in data analysis scripts.
+%   \item Showcase scenarios where property-based testing adds value.
+% \end{itemize}
+The Data Analysis script that Hypothesis will be applied to, is a script that was provided by the DLR \cite{Stoffers2021Astronaut}.
+The first function that will be examined is the Calculate Age function:
 
 \begin{lstlisting}[language=Python]
-    import numpy as np
-        
-    def incmatrix(genl1,genl2):
-        m = len(genl1)
-        n = len(genl2)
-        M = None #to become the incidence matrix
-        VT = np.zeros((n*m,1), int)  #dummy variable
-        
-        #compute the bitwise xor matrix
-        M1 = bitxormatrix(genl1)
-        M2 = np.triu(bitxormatrix(genl2),1) 
-    
-        for i in range(m-1):
-            for j in range(i+1, m):
-                [r,c] = np.where(M2 == M1[i,j])
-                for k in range(len(r)):
-                    VT[(i)*n + r[k]] = 1;
-                    VT[(i)*n + c[k]] = 1;
-                    VT[(j)*n + r[k]] = 1;
-                    VT[(j)*n + c[k]] = 1;
-                    
-                    if M is None:
-                        M = np.copy(VT)
-                    else:
-                        M = np.concatenate((M, VT), 1)
-                    
-                    VT = np.zeros((n*m,1), int)
-        
-        return M
+  def calculate_age(born):
+    today = date.today()
+    return today.year - born.year - 
+      ((today.month, today.day) < (born.month, born.day))
 \end{lstlisting}
 
+This is an auxiliary function, that is takes a date object and calculates the current age, by considering the time
+that has passed since the given date. This function can be tested as follows:
+
+\begin{lstlisting}[language=Python]
+@given(st.dates(min_value=date(1920, 1, 1), 
+                    max_value=date.today()))
+def test_calculate_age(born: date) -> None:
+  age = calculate_age(born)
+  assert age >= 0 and 
+  age <= (born.today().year - born.year)
+\end{lstlisting}
+
+The test generates random dates between the 1st of January 1920 and the current date and then
+it confirms that the calculate age function works as intended.
+
+The next function that will be tested is arguably the most important function in the script, the function that is used to prepare the data sets.
+This what the function looks like:
+
+\begin{lstlisting}[language=Python]
+  df = rename_columns(df)
+  df = df.set_index("astronaut_id")
+
+  # Set pandas dtypes for columns with date or time
+  df = df.dropna(subset=["time_in_space"])
+  df["time_in_space"] = df["time_in_space"].astype(int)
+  df["time_in_space"] = pd.to_timedelta
+  (df["time_in_space"], unit="m")
+  df["birthdate"] = pd.to_datetime(df["birthdate"])
+  df["date_of_death"] = pd.to_datetime
+  (df["date_of_death"])
+  df.sort_values("birthdate", inplace=True)
+
+  # Calculate extra columns from the original data
+  df["time_in_space_D"] = df["time_in_space"] 
+  / pd.Timedelta(days=1) # df["time_in_space_D"] = 
+  df["time_in_space"].astype("timedelta64[D]")
+  df["alive"] = df["date_of_death"].apply(is_alive)
+  df["age"] = df["birthdate"].apply(calculate_age)
+  df["died_with_age"] = df.apply(died_with_age, axis=1)
+\end{lstlisting}
+
+Please note that the line
+\begin{equation}
+  \texttt{df["time\_in\_space\_D"] = df["time\_in\_space"].astype("timedelta64[D]")}
+\end{equation}
+from the original script has been altered to
+\begin{equation}
+  \texttt{df["time\_in\_space"] / pd.Timedelta(days=1)}
+\end{equation}
+in the revised version.
+Hypothesis is well-suited to test even a complicated function like the above. The focus
+will be on generating appropriate inputs to the above.
+
+\begin{lstlisting}[language=Python]
+  @st.composite
+  def astronaut_data(draw) -> dict:
+      astronaut = draw(st.from_regex(
+        r"http://www\.wikidata\.org/entity/Q\d+",
+         fullmatch=True))
+      astronautLabel = draw(
+        st.from_regex(r"[A-Z][a-z]+ [A-Z][a-z]+"
+        , fullmatch=True))
+      birthdate = draw(
+        st.dates(min_value=date(1920, 1, 1), 
+                 max_value=date(2030, 12, 31)))
+      birthplaceLabel = draw(
+        st.from_regex(r"[A-Z][a-z]+", fullmatch=True))
+      sex_or_genderLabel = draw(
+        st.sampled_from(["male", "female"]))
+      time_in_space = draw(
+        st.integers(min_value=1, max_value=900)) 
+      date_of_death = draw(st.one_of(
+          st.none(), 
+          st.dates(birthdate + timedelta(days=1), 
+                   max_value=date(2030, 12, 31))
+          )
+      )
+  
+      birthdate_str = birthdate.strftime(
+        "%Y-%m-%dT00:00:00Z")
+      date_of_death_str = date_of_death.strftime(
+        "%Y-%m-%dT00:00:00Z") if date_of_death else None
+  
+      return {
+          "astronaut": astronaut,
+          "astronautLabel": astronautLabel,
+          "birthdate": birthdate_str,
+          "birthplaceLabel": birthplaceLabel,
+          "sex_or_genderLabel": sex_or_genderLabel,
+          "time_in_space": time_in_space,
+          "date_of_death": date_of_death_str
+      }
+\end{lstlisting}
+
+This function generates a wide variety of inputs. Specifically, it generates an astronaut link and label using regex search strategies.
+It then generates a birthdate that falls within a certain range, using the st.dates strategy as well as by specifiying a min and max value.
+The sex or gender label is then generated using st.sampled from which then allows Hypothesis to generate input using the values male and "female".
+The time in space is then generated using st.integers() and constraint to a given range.
+Then the date of death is used by combining two strategies, st.none and st.dates, of which one will be selected.
+The birthdate and if present death date, are then transformed into the corresponding format that the data preparation script expects.
+
+This shows how Hypothesis can be used to generate complex inputs which can then be used to test data analysis scripts.
+This will result in the following output.
+
 \subsubsection{Illustrative Cases}
-\begin{itemize}
-  \item Present specific cases where Hypothesis helped discover issues in data analysis scripts.
-\end{itemize}
+% \begin{itemize}
+%   \item Present specific cases where Hypothesis helped discover issues in data analysis scripts.
+% \end{itemize}
+Hypothesis can also be very helpful in finding potential bugs and making data analysis scripts more robust. In particular, by removing the max value of the
+time in space strategy, Hypothesis will trigger the data analysis script to crash. The following output is returned by Hypothesis:
+
+\begin{verbatim}
+  OverflowError: Python int too large to convert to C long
+Falsifying example: test_prepare_data_set(
+    data=[{'astronaut': 'http://www.wikidata.org/entity/Q0',
+      'astronautLabel': 'Aa Aa',
+      'birthdate': '2000-01-01T00:00:00Z',
+      'birthplaceLabel': 'Aa',
+      'sex_or_genderLabel': 'male',
+      'time_in_space': 18446744073709551616,
+      'date_of_death': '2000-01-02T00:00:00Z'}],
+)
+
+\end{verbatim}
+
+The specific can be traced back to :
+
+\begin{lstlisting}[language=Python]
+  ....
+  df = rename_columns(df)
+  df = df.set_index("astronaut_id")
+
+  # Set pandas dtypes for columns with date or time
+  df = df.dropna(subset=["time_in_space"])
+  df["time_in_space"] = df["time_in_space"]
+  .astype(int) # This caused line caused the error
+  df["time_in_space"] = pd.to_timedelta
+  (df["time_in_space"], unit="m")
+  df["birthdate"] = pd.to_datetime(df["birthdate"])
+  df["date_of_death"] = pd.to_datetime
+  (df["date_of_death"])
+  df.sort_values("birthdate", inplace=True)
+
+....
+\end{lstlisting}
+
+And it is due to a Python integer being to large to be converted to a C long. The data preparation script can
+therefore be improved, by checking beforehand that the integers are within a specified range.
+
+As for another example, by removing the max date range, the following error will be produced:
+
+\begin{verbatim}
+  pandas._libs.tslibs.np_datetime.OutOfBoundsDatetime: 
+  Out of bounds nanosecond timestamp: 2263-01-01T00:00:00Z, 
+  at position 0
+  Falsifying example: test_prepare_data_set(
+      data=[{'astronaut': 'http://www.wikidata.org/entity/Q0',
+        'astronautLabel': 'Aa Aa',
+        'birthdate': '2000-01-01T00:00:00Z',
+        'birthplaceLabel': 'Aa',
+        'sex_or_genderLabel': 'male',
+        'time_in_space': 1,
+        'date_of_death': '2263-01-01T00:00:00Z'}],
+  ) 
+\end{verbatim}
+
+The datetime64[ns] data type in pandas/Numpy is limited to the range of dates from 1677-09-21 to 2262-04-11 because it stores dates as 64-bit integers representing nanoseconds since the Unix epoch (January 1, 1970). Therefore, if numpy tries to convert the date of death, '2263-01-01T00:00:00Z', the script will crash.
+This shows yet another example of how the data script can be made more robust. Specifically, be checking that the dates are within date ranges that
+pandas/Numpy can process.
+
 
 \section{Discussion}
 
