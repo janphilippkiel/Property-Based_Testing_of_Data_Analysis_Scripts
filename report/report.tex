@@ -188,6 +188,24 @@ The \texttt{composite} decorator is used to specify a function that generates a 
 \subsubsection{Integration with pytest}
 The integration with pytest is automatic. It is sufficient to run pytest in the traditional sense, as pytest will automatically pick up the hypothesis-tests.
 
+\subsubsection{Changing number of test cases generated}
+The number of test cases that are generated can be changed with the following decorator:
+
+\begin{lstlisting}[language=Python]
+from hypothesis import settings
+
+@given(st.integers())
+@settings(max_examples=100)
+def test_builtin_abs(x: int) -> None:
+  ...
+\end{lstlisting}
+
+\noindent Globally this can be done as follows:
+\begin{lstlisting}[language=Python]
+  settings.register_profile("default", max_examples=100)
+  settings.load_profile("default")
+\end{lstlisting}
+
 % [Pages 9-13]
 \subsubsection{Application for Data Analysis Scripts}
 Hypothesis can be used to test data analysis scripts. In particular, Hypothesis can be helpful to ensure that the data preparation and data cleaning steps are properly tested. This is due to Hypothesis being able to simulate a wide range of inputs, which can then be used to ensure that the functions are robust. The Data Analysis script that Hypothesis will be applied to, is a script that was provided by the DLR \cite{Stoffers2021Astronaut}.
