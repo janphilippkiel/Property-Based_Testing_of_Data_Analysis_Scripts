@@ -145,7 +145,7 @@ Furthermore, it can help save time, by encompassing many traditional unit test c
 Lastly, one typically has less control when using PBT in comparison to a typical unit test.\footnote{https://hypothesis.readthedocs.io/en/latest/, accessed: 2024-01-10}. The majority of these advantages and disadvantages correspond with the general advantages and disadvantages of PBT that can be found within the academic literature.
 
 \subsubsection{Strategies and Data Generation}
-One of the main concepts of Hypothesis is the idea of search strategies. Search strategies refer to how hypothesis will try to generate input for the test function. Or rather, what it will use to `search' for bugs. Hypothesis has plenty of different search strategies that can be used. For instance, it can generate text, floats, integers, boolean values, a value of a given set of values and values that match a given regex. Furthermore, these search strategies can be refined by input parameters. This can, for instance, limit the size of the floats generated or allow only dates between date ranges.
+One of the main concepts of Hypothesis is the idea of search strategies. Search strategies refer to how Hypothesis will try to generate input for the test function. Or rather, what it will use to `search' for bugs. Hypothesis has plenty of different search strategies that can be used. For instance, it can generate text, floats, integers, boolean values, a value of a given set of values and values that match a given regex. Furthermore, these search strategies can be refined by input parameters. This can, for instance, limit the size of the floats generated or allow only dates between date ranges.
 
 The format of using a search strategy in Hypothesis is consistent. Typically, an object representing a search strategy is instantiated using the syntax \texttt{st.(type)}, where \texttt{type} is the specific search strategy to use (e.g., \texttt{text}, \texttt{float}, \texttt{date}). The instantiation can be further refined by specifying parameters. The parameters can for instance, limit the dates to a certain range or only generate floats up to a certain size. By default, Hypothesis will try to create 100 different tests
 
@@ -156,7 +156,7 @@ In order to use Hypothesis, one first needs to install the Hypothesis package. T
   \item Operating System: Ubuntu 22.04.3 LTS
   \item Python Version: 3.10.12
   \item pip Version: 22.0.2
-  \item hypothesis Version: 6.92.2
+  \item Hypothesis Version: 6.92.2
 \end{itemize}
 However, Hypothesis officially tries to support the latest version of Python.\footnote{https://hypothesis.readthedocs.io/en/latest/, accessed: 2024-01-10}
 
@@ -207,18 +207,18 @@ The \texttt{composite} decorator is used to specify a function that generates a 
 \vspace{5mm}
 \noindent In order to improve test robustness, it can be useful to increase the number of tests generated. Furthermore, generating large amounts of random test cases helps to approximate formal verification. The number of test cases that are generated can be changed with the \texttt{settings} decorator and the \texttt{max\_samples} property:
 
-\begin{lstlisting}[language=Python,caption={Configuring Number of Generated Test Cases from code/tutorial.ipynb}]
+\begin{lstlisting}[language=Python,caption={Specifying Test Case Amount from code/tutorial.ipynb}]
   from hypothesis import settings
 
-  @given(st.integers())
   @settings(max_examples=100)
+  @given(st.integers())
   def test_builtin_abs(x: int) -> None:|\Suppressnumber|
-    ...|\Reactivatenumber{8}|
+    ...|\Reactivatenumber{9}|
 
 \end{lstlisting}
 
 \noindent Globally this can be done as follows in the beginning of the Python test file:
-\begin{lstlisting}[language=Python,caption={Configuring Number of Generated Test Cases from code/tutorial.ipynb}]
+\begin{lstlisting}[language=Python,caption={Specifying Test Case Amount from code/tutorial.ipynb}]
   settings.register_profile("default", max_examples=100)
   settings.load_profile("default")
 \end{lstlisting}
@@ -227,28 +227,24 @@ The \texttt{composite} decorator is used to specify a function that generates a 
 
 \newpage
 \noindent Here is an example:
-\begin{lstlisting}[language=Python,caption={Specifying Seeds in Hypothesis from code/tutorial.ipynb}]
-from hypothesis import given, seed
-import hypothesis.strategies as st
+\begin{lstlisting}[language=Python,caption={Specifying Seeds from code/tutorial.ipynb}]
+  from hypothesis import given, seed
+  import hypothesis.strategies as st
 
-@seed(30)
-@given(st.integers())
-def test_builtin_abs(x: int) -> None:
-    assert abs(x) >= 0
-    assert abs(x) == (x if x >= 0 else -x)
+  @seed(30)
+  @given(st.integers())
+  def test_builtin_abs(x: int) -> None:|\Suppressnumber|
+  ...|\Reactivatenumber{11}|
 
-test_builtin_abs()
 \end{lstlisting}
 
 \subsubsection{Integration with pytest}
-The integration with pytest is automatic. It is sufficient to run pytest in the traditional sense, as pytest will automatically recognize the Hypothesis tests. In the \texttt{tutorial.ipynb} notebook this is illustrated. It can be seen that pytest correctly identified the Hypothesis test. It is, however, important to note that pytest registers a hypothesis test as a single test. In actuality, multiple tests are run. By using the \texttt{--hypothesis-show-statistics} flag, one can get more detailed information specific to Hypothesis. For example:
-\begin{lstlisting}[language=bash]
-  pytest test.py --hypothesis-show-statistics
-\end{lstlisting}
+The integration with pytest is automatic. It is sufficient to run pytest in the traditional sense, as pytest will automatically recognize the Hypothesis tests. In the \texttt{tutorial.ipynb} notebook this is illustrated. It can be seen that pytest correctly identified the Hypothesis test. However it is important to note that pytest registers a Hypothesis test as a single test. In actuality, multiple tests are run. By using the optional \texttt{`-{}-hypothesis-show-statistics'} flag, one can get more detailed information specific to Hypothesis.
 
-\noindent The output returned is:
+\vspace{5mm}
+\noindent The returned output could look like this:
 \begin{verbatim}
-======================= Hypothesis Statistics =====================
+====================== Hypothesis Statistics ======================
 test.py::test_builtin_abs:
 
   - during generate phase (0.02 seconds):
@@ -258,11 +254,9 @@ test.py::test_builtin_abs:
   - Stopped because settings.max_examples=100
 \end{verbatim}
 
-
 \subsubsection{Application for Data Analysis Scripts}
 Hypothesis can be used to test data analysis scripts. In particular, Hypothesis can be helpful to ensure that the data preparation and data cleaning steps are properly tested. This is due to Hypothesis being able to simulate a wide range of inputs, which can then be used to ensure that the functions are robust. In the following, we will apply Hypothesis to an exemplary astronaut data analysis script~\cite{Stoffers2021} from the DLR.
 
-% \vspace{5mm}
 \newpage
 \noindent The first function that will be examined is the \texttt{calculate\_age} function:
 
@@ -311,24 +305,11 @@ The test generates random dates between the 1st of January 1920 and the current 
   ...|\Reactivatenumber{46}|
 
 \end{lstlisting}
-
-\vspace{5mm}
-\noindent Please note that the original line from the script:
-\begin{lstlisting}[language=Python,caption={Prepare Data Set from code/data\_analysis.ipynb},firstnumber=14]
-  df["time_in_space_D"] = df["time_in_space"].astype("timedelta64[D]")
-\end{lstlisting}
-has been altered to:
-\begin{lstlisting}[language=Python,caption={Prepare Data Set from code/data\_analysis.ipynb},firstnumber=14]
-  df["time_in_space_D"] = df["time_in_space"] / pd.Timedelta(days=1)
-\end{lstlisting}
-in the revised version.
-
-\vspace{5mm}
-\noindent Hypothesis is well suited to test even a complicated function like the above. The focus will be on generating appropriate inputs for the \texttt{prepare\_data\_set} function:
+Hypothesis is well suited to test even a complicated function like the above. The focus will be on generating appropriate inputs for the \texttt{prepare\_data\_set} function:
 
 \begin{lstlisting}[language=Python,caption={Prepare Data Set from code/data\_analysis.ipynb}]
-@st.composite
-def astronaut_data(draw) -> dict:
+  @st.composite
+  def astronaut_data(draw) -> dict:
     astronaut = draw(st.from_regex(r"http://www\.wikidata\.org/entity/Q\d+", fullmatch=True))
     astronautLabel = draw(st.from_regex(r"[A-Z][a-z]+ [A-Z][a-z]+", fullmatch=True))
     birthdate = draw(st.dates(min_value=date(1920, 1, 1), max_value=date(2030, 12, 31)))
@@ -362,24 +343,24 @@ Falsifying example: test_prepare_data_set(
   )
 \end{verbatim}
 
-\noindent The specific can be traced back to:
+\noindent This specific error can be traced back to line~7:
 
-\begin{lstlisting}[language=Python,caption={Prepare Data Set from code/data\_analysis.ipynb}]
+\begin{lstlisting}[language=Python,caption={Overflow Error from code/data\_analysis.ipynb}]
   |\Suppressnumber|
   ...|\Reactivatenumber{5}|
   # Set pandas dtypes for columns with date or time
   df = df.dropna(subset=["time_in_space"])
-  df["time_in_space"] = df["time_in_space"].astype(int)
+  df["time_in_space"] = df["time_in_space"].astype(int) # This line caused the error
   df["time_in_space"] = pd.to_timedelta(df["time_in_space"], unit="m")
   df["birthdate"] = pd.to_datetime(df["birthdate"])
   df["date_of_death"] = pd.to_datetime(df["date_of_death"])
   df.sort_values("birthdate", inplace=True)|\Suppressnumber|
-  ...|\Reactivatenumber{46}|
+  ...|\Reactivatenumber{60}|
 
 \end{lstlisting}
-The error is due to an `int' value being too large to be converted to a `C long'. The data preparation script can therefore be improved by ensuring that processed integers are within an error-free range.
+This error occurs when a Python integer exceeds the size limits of a C long data type, leading to overflow during interactions with C-based extensions or libraries. The data preparation script can therefore be improved by ensuring that processed integers are within an error-free range.
 
-\vspace{5mm}
+\newpage
 \noindent As for another example, by removing the max date range the following error will be produced:
 
 \begin{verbatim}
@@ -423,6 +404,7 @@ However, it is important to acknowledge the limitations of our study, primarily 
 % BibTeX users should specify bibliography style 'splncs04'.
 % References will then be sorted and formatted in the correct style.
 %
+\newpage
 \bibliographystyle{splncs04}
 \bibliography{references}
 \end{document}
