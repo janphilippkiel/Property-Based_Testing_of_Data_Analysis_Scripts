@@ -207,7 +207,7 @@ The \texttt{composite} decorator is used to specify a function that generates a 
 \vspace{5mm}
 \noindent In order to improve test robustness, it can be useful to increase the number of tests generated. Furthermore, generating large amounts of random test cases helps to approximate formal verification. The number of test cases that are generated can be changed with the \texttt{settings} decorator and the \texttt{max\_samples} property:
 
-\begin{lstlisting}[language=Python,caption={??? from code/tutorial.ipynb}]
+\begin{lstlisting}[language=Python,caption={Configuring Number of Generated Test Cases from code/tutorial.ipynb}]
   from hypothesis import settings
 
   @given(st.integers())
@@ -218,7 +218,7 @@ The \texttt{composite} decorator is used to specify a function that generates a 
 \end{lstlisting}
 
 \noindent Globally this can be done as follows in the beginning of the Python test file:
-\begin{lstlisting}[language=Python,caption={??? from code/tutorial.ipynb}]
+\begin{lstlisting}[language=Python,caption={Configuring Number of Generated Test Cases from code/tutorial.ipynb}]
   settings.register_profile("default", max_examples=100)
   settings.load_profile("default")
 \end{lstlisting}
@@ -227,7 +227,7 @@ The \texttt{composite} decorator is used to specify a function that generates a 
 
 \newpage
 \noindent Here is an example:
-\begin{lstlisting}[language=Python,caption={??? from code/tutorial.ipynb}]
+\begin{lstlisting}[language=Python,caption={Specifying Seeds in Hypothesis from code/tutorial.ipynb}]
 from hypothesis import given, seed
 import hypothesis.strategies as st
 
@@ -411,7 +411,7 @@ PBT fundamentally is a method that relies less on technical know-how and more on
 The applicability of Hypothesis in the context of DLR is therefore conceivable. However, the scope of this work is limited as it only represents a relatively simple use case. We have demonstrated the basic functionality of Hypothesis and its application to an exemplary analysis script. In order to fully assess its suitability as a complement to established testing methods and its potential benefits for DLR, further structured and comprehensive use cases need to be investigated. This will lead to a more definitive understanding of the role and value of PBT in improving software testing practices in research-intensive environments such as the DLR.
 
 \section{Conclusion}
-In this study, we have explored and applied the method of PBT, enriching our understanding with insights from existing research and an introduction to the Hypothesis framework. It presents noteable advantages, by offering capabilities for automated and randomised generation of test inputs to test general properties of systems. PBT proposes a way to supplement traditional testing methods, significantly enhancing the reliability of developed systems.
+In this study, we have explored and applied the method of PBT, enriching our understanding with insights from existing research and an introduction to the Hypothesis framework. It presents notable advantages, by offering capabilities for automated and randomised generation of test inputs to test general properties of systems. PBT proposes a way to supplement traditional testing methods, significantly enhancing the reliability of developed systems.
 
 In addition, our prototype demonstrated a potential application for PBT in the context of data analysis scripts at the DLR. This practical example implies the possible benefits and utility of PBT in real-world research settings.
 
