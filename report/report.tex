@@ -11,6 +11,7 @@
 % Other font encondings may result in incorrect characters.
 %
 \usepackage{graphicx}
+\renewcommand{\figurename}{Figure}
 % Used for displaying a sample figure. If possible, figure files should
 % be included in EPS format.
 %
@@ -89,36 +90,37 @@ In the evolving landscape of data analysis, the complexity and volume of data ha
 The structure of this report begins with a brief description of the applied methodology, followed by the presentation of results. These results are then discussed in detail, placed in the context of the existing literature and used to derive implications for future works.
 
 \section{Background}
-Within the German Aerospace Center (DLR), the reliability of data analysis scripts is a cornerstone of successful research outcomes. DLR researchers frequently use Python~\cite{Kurnatowski2020}, along with powerful libraries like pandas\footnote{https://pandas.pydata.org/, accessed: 2024-01-21} and Matplotlib\footnote{https://matplotlib.org/, accessed: 2024-01-21}, for complex data manipulations and visualisations. This introduces significant testing challenges. DLR, being at the forefront of aerospace research and development, deals with an enormous range of data variables, from satellite imagery to flight dynamics.\footnote{https://www.dlr.de/en/dlr/about-us, accessed: 2024-01-21} This variety and complexity of data make testing particularly challenging. This report explores the adoption of property-based testing, presenting it as an innovative and essential strategy to overcome these testing challenges.
+Within the German Aerospace Center (DLR), the reliability of data analysis scripts is a cornerstone of successful research outcomes. DLR researchers frequently use Python~\cite{Kurnatowski2020}, along with powerful libraries like pandas\footnote{https://pandas.pydata.org/, accessed: 2024-01-21} and Matplotlib\footnote{https://matplotlib.org/, accessed: 2024-01-21}, for complex data manipulations and visualisations. This introduces significant testing challenges. DLR, being at the forefront of aerospace research and development, deals with an enormous range of data variables, from satellite imagery to flight dynamics.\footnote{https://www.dlr.de/en/dlr/about-us, accessed: 2024-01-21} This variety and complexity of data make testing particularly challenging. This report explores the adoption of property-based testing (PBT), presenting it as an innovative and essential strategy to overcome these testing challenges.
 
 \section{Method}
 Our methodology in tackling these challenges involved two key stages.
 
 \subsection{Literature Study}
-The first stage of our methodology involved a thorough literature review on property-based testing. Our objective was to gain an in-depth understanding of its theoretical foundations, including its history, key principles, and diverse applications. The process consisted of systematic searches in academic databases and online repositories, using targeted keywords such as `property-based testing' and `automatic test case generation'. We focused on selecting literature from various domains, particularly papers highlighting PBT's ability to create diverse test inputs. This approach provided a solid knowledge base and included insights on handling complex datasets in DLR. These findings are complemented in the next stage of our study.
+The first stage of our methodology involved a thorough literature review on PBT. Our objective was to gain an in-depth understanding of its theoretical foundations, including its history, key principles, and diverse applications. The process consisted of systematic searches in academic databases and online repositories, using targeted keywords such as `property-based testing' and `automatic test case generation'. We focused on selecting literature from various domains, particularly papers highlighting PBT's ability to create diverse test inputs. This approach provided a solid knowledge base and included insights on handling complex datasets at the DLR. These findings are complemented in the next stage of our study.
 
 \subsection{Prototyping}
-The second stage centered on practical application, where we developed a comprehensive guide for using Hypothesis, a property-based testing framework for Python. This guide covered critical aspects including installation, configuration, and integration with Python's pytest\footnote{https://pytest.org/, accessed: 2024-01-21} framework. It also provided practical examples demonstrating the process of defining properties and generating test inputs using Hypothesis. To validate our methodology, we conducted a case study that involved applying property-based testing to a data analysis script related to astronauts. This case study served as a real-world application, illustrating the practicality of property-based testing in complex data scenarios.
+The second stage centered on practical application through the use of Jupyter Notebooks\footnote{https://jupyter.org/, accessed: 2024-01-21}. We developed a comprehensive guide (\texttt{tutorial.ipynb}) for using Hypothesis\footnote{https://hypothesis.works/, accessed: 2024-01-21}---a PBT framework for Python. This guide covered critical aspects including installation, configuration, and integration with pytest\footnote{https://pytest.org/, accessed: 2024-01-21}. It also provided concrete examples demonstrating the process of defining properties and generating test inputs using Hypothesis. To validate our methodology, we conducted a case study (\texttt{data\_analysis.ipynb}) that involved applying PBT to a data analysis script on astronauts. This case study served as a realistic application, illustrating the potential of PBT in complex data scenarios.
 
 \section{Results}
-First, we uncovered key theoretical insights on property-based testing through our literature study. Then, we demonstrated the practical effectiveness of this approach in our prototype using Hypothesis.
+First, we uncovered key theoretical insights about PBT through our literature study. Second, we demonstrated the practical effectiveness of Hypothesis in our prototype using code examples from the included Jupyter Notebooks.
 
 \subsection{Literature Study of Property-Based Testing}
 \subsubsection{History}
-The origins of property-based testing (PBT) can be traced back more than 20 years ago, even before 2000. While it had already been a subject within information technology research, as seen in Guo (1999) and Fink (1997), it gained significantly more attention with the development of QuickCheck\footnote{https://www.cse.chalmers.se/\%7Erjmh/QuickCheck/, accessed: 2024-01-21}~\cite{Shi2023,Guo1999,Fink1997,MacIver2019,Honarvar2020}. Initially focusing on research questions related to topics such as automation of test input generation and automated techniques in general~\cite{Fink1997} and directing the automated input generator towards values with a higher probability of failure~\cite{Loescher2017}, recent papers have focused on the implementation of different frameworks or platforms and techniques for PBT application~\cite{Padhye2019,Honarvar2020,Shi2023,Corgozinho2023}. Moreover, PBT currently enjoys wide-ranging support in different programming languages including automation capabilities~\cite{Chen2022,Padhye2019,Honarvar2020,ElazarMittelman2023,Shi2023}, as well as the application within many different python projects using Hypothesis as a framework for PBT~\cite{Corgozinho2023}.
+The origins of PBT can be traced back more than 20 years ago, even before the year 2000. While it had already been a subject within information technology research, as seen in Guo et.~al.~\cite{Guo1999} as well as Fink and Bishop~\cite{Fink1997}, it gained significantly more attention with the development of QuickCheck\footnote{https://www.cse.chalmers.se/\%7Erjmh/QuickCheck/, accessed: 2024-01-21}~\cite{Shi2023,Guo1999,Fink1997,MacIver2019,Honarvar2020}. Initially focusing on research questions related to topics such as automation of test input generation and automated techniques in general~\cite{Fink1997} and directing the automated input generator towards values with a higher probability of failure~\cite{Loescher2017}, recent papers have focused on the implementation of different frameworks or platforms and techniques for PBT application~\cite{Padhye2019,Honarvar2020,Shi2023,Corgozinho2023}. Moreover, PBT currently enjoys wide-ranging support in different programming languages including automation capabilities~\cite{Chen2022,Padhye2019,Honarvar2020,ElazarMittelman2023,Shi2023}, as well as the application within many different Python projects using Hypothesis as a framework for PBT~\cite{Corgozinho2023}.
 
 \subsubsection{Key Concepts}
-PBT is a method supporting the formal verification of a software~\cite{Chen2022,Fink1997,Honarvar2020,Paraskevopoulou2015}, focusing on validating high-level or general properties of the software~\cite{Fink1997,Honarvar2020,Corgozinho2023}. Test cases within this method are typically formulated using logical descriptions of the expected behavior of the software~\cite{Chen2022,Fink1997,Honarvar2020,Loescher2017,Corgozinho2023}, including pre- and post-conditions of the system~\cite{Honarvar2020}. To formally approximate the system's behavior, a single test case is executed multiple times with randomly generated input to search for counterexamples that violate specific properties or cause a software crash, thereby invalidating said property~\cite{Chen2022,Loescher2017,Padhye2019,ElazarMittelman2023,Paraskevopoulou2015,Corgozinho2023}. Data generators are used for random input generation, which can be adjusted based on a certain domain's needs~\cite{Chen2022,Loescher2017,Padhye2019,ElazarMittelman2023}. Through automated execution of tests with random input, PBT tries to approximate the validity of a property by subjecting it to numerous instantiations within a given input range; otherwise, the property is falsified~\cite{Fink1997,ElazarMittelman2023,Corgozinho2023,Paraskevopoulou2015}. To further elaborate on the properties, which represent the desired behaviour in terms of input and output of given tested functions through specifications~\cite{Chen2022,Fink1997,Loescher2017}, some examples can be given. To start with a simple one, think of a function that adds two numbers (A, B) and returns the sum of both numbers (A + B). You can define a test which asserts that for any given input for either A and B, the function will return the addition of both numbers. Another simple example would be a sort-function. Assume a sort-function sorts a list, the invariant would be, that sorting an already sorted or the same list twice, will result in a sorted and the same list~\cite{Corgozinho2023}. A common example which is frequently used for showcasing PBT are binary search trees~\cite{Corgozinho2023,Shi2023}, where one property to test might be that after ``insert[ing] a key into a valid BST, it should maintain its validity''~\cite{Shi2023}. In the context of PBT you would then use logic expressions for your tests and use a random input generator to check whether the given property is violated in any case within a certain input range. It is also possible to apply it to software security concerns such as authentication~\cite{Fink1997} or for verifying the ``correctness of hardware [and] external software involved''~\cite{Chen2022}. In summary, PBT allows for the approximation of a system's invariants formal verification~\cite{Fink1997,ElazarMittelman2023,Corgozinho2023}.
+PBT is a method supporting the formal verification of a software~\cite{Chen2022,Fink1997,Honarvar2020,Paraskevopoulou2015}, focusing on validating high-level or general properties of the software~\cite{Fink1997,Honarvar2020,Corgozinho2023}. Test cases within this method are typically formulated using logical descriptions of the expected behavior of the software~\cite{Chen2022,Fink1997,Honarvar2020,Loescher2017,Corgozinho2023}, including pre- and post-conditions of the system~\cite{Honarvar2020}. To formally approximate the system's behavior, a single test case is executed multiple times with randomly generated input to search for counterexamples that violate specific properties or cause a software crash, thereby invalidating said property~\cite{Chen2022,Loescher2017,Padhye2019,ElazarMittelman2023,Paraskevopoulou2015,Corgozinho2023}. Data generators are used for random input generation, which can be adjusted based on a certain domain's needs~\cite{Chen2022,Loescher2017,Padhye2019,ElazarMittelman2023}. Through automated execution of tests with random input, PBT tries to approximate the validity of a property by subjecting it to numerous instantiations within a given input range; otherwise, the property is falsified~\cite{Fink1997,ElazarMittelman2023,Corgozinho2023,Paraskevopoulou2015}. To further elaborate on the properties, which represent the desired behaviour in terms of input and output of given tested functions through specifications~\cite{Chen2022,Fink1997,Loescher2017}, some examples can be given. To start with a simple one, think of a function that adds two numbers (A, B) and returns the sum of both numbers (A + B). You can define a test which asserts that for any given input for either A and B, the function will return the addition of both numbers. Another simple example would be a sort-function. Assume a sort-function sorts a list, the invariant would be, that sorting an already sorted or the same list twice, will result in a sorted and the same list~\cite{Corgozinho2023}. A common example which is frequently used for showcasing PBT are binary search trees~\cite{Corgozinho2023,Shi2023}, where one property to test might be that after ``insert[ing] a key into a valid BST [binary search tree], it should maintain its validity''~\cite{Shi2023}. In the context of PBT you would then use logic expressions for your tests and use a random input generator to check whether the given property is violated in any case within a certain input range. It is also possible to apply it to software security concerns such as authentication~\cite{Fink1997} or for verifying the ``correctness of hardware [and] external software involved''~\cite{Chen2022}. In summary, PBT allows for the approximation of a system's invariants formal verification~\cite{Fink1997,ElazarMittelman2023,Corgozinho2023}.
 
-\subsubsection{Advantages and Disadvantages}
+\subsubsection{Advantages and Disadvantages} \label{sec:adv_disadv}
 As previously mentioned, PBT supports the formal validation of software by testing specified properties using randomly generated input for each test. However, describing all expected behavior of a system in a logical style is often less feasible~\cite{Chen2022,Koopman2012}. In contrast, by applying PBT the required endeavour for formal validation can be lowered~\cite{Hritcu2016,Chen2022,Paraskevopoulou2015}. Moreover, specifications used for PBT might also improve cooperation between software developers and testers in larger projects, as the language used for defining tests is easier to grasp compared to abstract proofs~\cite{Chen2022,Loescher2017}. Besides this, PBT can also be applied to tests in several contexts~\cite{Karlsson2019}, such as interfaces~\cite{Karlsson2019,Francisco2013,LamelaSeijas2013}, e.g. by testing invariants regarding the responses of requested URLs of REST-APIs~\cite{Karlsson2019}. Other potential domains of application include telecom systems~\cite{Arts2006}, file synchronisation services~\cite{Hughes2016} and databases~\cite{Arts2015}. Despite its wide applicability and advantages regarding formal validation, PBT reduces engineering effort in terms of defining individual test cases and input parameters~\cite{Chen2022,Loescher2017,Corgozinho2023} and may also incentivise developers to design code that can be easily expressed by properties~\cite{Chen2022}. More specifically, when compared to manually written tests like in unit-testing, PBT allows the software engineer to put more emphasis on ensuring and restoring correctness of the software and less on ``defining test case inputs, examples, and scenarios''~\cite{Corgozinho2023}, turning it into a much less mundane effort~\cite{Loescher2017}. It therefore reduces costs related to testing, including costs induced by changes made to the software~\cite{Chen2022,Loescher2017}. Furthermore it allows for validating a software based on a much larger range of inputs~\cite{Loescher2017,Corgozinho2023} and even more creative or sophisticated inputs~\cite{Arts2015}. As such PBT complements traditional testing techniques by unveiling yet unknown bugs within even well tested systems~\cite{Arts2015,Hughes2016,Arts2006} and in general, is useful for finding bugs within the implementation of a software and its specifications~\cite{Chen2022,Fink1997,Loescher2017,Paraskevopoulou2015,Claessen2000,Corgozinho2023}.
 
-Although PBT offers quite some advantages, it does not come without any disadvantages. Due to the randomness of the input generator provided by tools, the chances of finding more specific bugs is reduced, depending on the portion of erroneous inputs of the entire input range, thus potentially failing to unveil errors~\cite{Loescher2017,Padhye2019,ElazarMittelman2023,Shi2023}. It should be noted that processing a large number of tests can lead to reduced efficiency~\cite{ElazarMittelman2023,Shi2023}, as it involves attempting to approximate a formal proof using numerous randomly selected scenarios~\cite{Fink1997,ElazarMittelman2023,Paraskevopoulou2015}. Löscher (2017) gave quite a good fictional example using a ``system of network nodes''~\cite{Loescher2017}. They tried to falsify the property that for any input scenarios (graphs created), the longest of the shortest paths ``between the sink and other nodes [...] should not exceed 21 hops''~\cite{Loescher2017}. Even after 100000~tests they were not able to falsify the property, which could be done manually~\cite{Loescher2017}. A possible solution to this problem is implied by the usage of individually conceptualised data generators~\cite{Loescher2017,ElazarMittelman2023,Shi2023,Paraskevopoulou2015,Claessen2000} or targeted property-based testing~\cite{Loescher2017}. While constraining data generators in order to cancel a test by using pre-conditions as a form of domain knowledge represents an option to reduce computation effort~\cite{Loescher2017,ElazarMittelman2023,Shi2023}, targeted property-based testing achieves this by guiding the input generator~\cite{Loescher2017}. The idea is to increase the chance of generating inputs causing the violation of a property, by applying search techniques~\cite{Loescher2017}. However, the first technique of implementing specified data generators comes with its own challenges regarding the development~\cite{Loescher2017,ElazarMittelman2023,Shi2023}, resulting in a reduced attractiveness of PBT.
+Although PBT offers quite some advantages, it does not come without any disadvantages. Due to the randomness of the input generator provided by tools, the chances of finding more specific bugs is reduced, depending on the portion of erroneous inputs of the entire input range, thus potentially failing to unveil errors~\cite{Loescher2017,Padhye2019,ElazarMittelman2023,Shi2023}. It should be noted that processing a large number of tests can lead to reduced efficiency~\cite{ElazarMittelman2023,Shi2023}, as it involves attempting to approximate a formal proof using numerous randomly selected scenarios~\cite{Fink1997,ElazarMittelman2023,Paraskevopoulou2015}. Löscher and Sagonas~\cite{Loescher2017} gave quite a good fictional example using a ``system of network nodes''~\cite{Loescher2017}. They tried to falsify the property that for any input scenarios (graphs created), the longest of the shortest paths ``between the sink and other nodes [...] should not exceed 21 hops''~\cite{Loescher2017}. Even after 100000~tests they were not able to falsify the property, which could be done manually~\cite{Loescher2017}. A possible solution to this problem is implied by the usage of individually conceptualised data generators~\cite{Loescher2017,ElazarMittelman2023,Shi2023,Paraskevopoulou2015,Claessen2000} or targeted property-based testing~\cite{Loescher2017}. While constraining data generators in order to cancel a test by using pre-conditions as a form of domain knowledge represents an option to reduce computation effort~\cite{Loescher2017,ElazarMittelman2023,Shi2023}, targeted property-based testing achieves this by guiding the input generator~\cite{Loescher2017}. The idea is to increase the chance of generating inputs causing the violation of a property, by applying search techniques~\cite{Loescher2017}. However, the first technique of implementing specified data generators comes with its own challenges regarding the development~\cite{Loescher2017,ElazarMittelman2023,Shi2023}, resulting in a reduced attractiveness of PBT.
 
 \subsubsection{Classification within the Test Pyramid}
-In order to classify PBT within the test pyramid, we focus on the level of unit and integration (service) testing~\cite{Aniche2022,Radziwill2020}. Current literature indicates that PBT has not yet been applied for testing at the highest level of either system or UI tests~\cite{Radziwill2020,Aniche2022}, making them irrelevant for our analysis.
+In order to classify PBT within the test pyramid, we focus on the level of unit and integration (service) testing~\cite{Aniche2022,Radziwill2020}. Current literature indicates that PBT has not yet been applied for testing at the highest level of either system or user interface (UI) tests~\cite{Radziwill2020,Aniche2022}, making them irrelevant for our analysis.
 
 \begin{figure}
+  \centering
   \includegraphics[width=.618\textwidth]{includes/test_pyramid.eps}
   \caption{Test Pyramid. Based on Vocke, H.: The Practical Test Pyramid (2018). https://martinfowler.com/articles/practical-test-pyramid.html}
   \label{fig:test_pyramid}
@@ -134,35 +136,34 @@ and managing sorted lists, it also offers potential applications concerning the 
 Consequently, the PBT method can be applied to both unit and integration testing. In practical terms, PBT is commonly employed for unit testing and is well suited for this purpose, as its highlighted advantages demonstrate complementary effects compared to simple example-based unit testing. However, its applicability is not restricted solely to unit testing. Existing literature has shown that it also extends to testing the integration of various components.
 
 \subsubsection{Tools and Programming Languages}
-As previously mentioned, PBT is widely supported across various programming languages~\cite{Chen2022,Shi2023}. It is supported by Java (Quicktheories\footnote{https://github.com/quicktheories/QuickTheories, accessed: 2024-01-21}), coq (QuickChick\footnote{https://github.com/QuickChick/QuickChick, accessed: 2024-01-21}), Scala (ScalaCheck\footnote{https://scalacheck.org/, accessed: 2024-01-21}), Erlang (QuickCheck\footnote{http://www.quviq.com/products/erlang-quickcheck/, accessed: 2024-01-21} and PropEr\footnote{https://proper-testing.github.io/, accessed: 2024-01-21}), Haskell (QuickCheck\footnote{https://hackage.haskell.org/package/QuickCheck, accessed: 2024-01-21}), OCaml (QCheck\footnote{https://github.com/c-cube/qcheck/, accessed: 2024-01-21} and Crowbar\footnote{https://github.com/stedolan/crowbar, accessed: 2024-01-21}) to name a few examples~\cite{MacIver2016,Padhye2019,Paraskevopoulou2015,Arts2008,Papadakis2011,Claessen2000}. Obviously many of these were inspired by QuickCheck, being the tool popularising PBT. However, this study focuses on Hypothesis\footnote{https://hypothesis.works/, accessed: 2024-01-21}, a Python-based PBT implementation framework. This framework has attracted significant attention recently~\cite{Corgozinho2023,MacIver2019}, is compatible with pytest and unittest\footnote{https://docs.python.org/3/library/unittest.html, accessed: 2024-01-21}, as well as being open source under the Mozilla Public License 2.0\footnote{https://hypothesis.works/products/, accessed: 2024-01-21}.
+As previously mentioned, PBT is widely supported across various programming languages~\cite{Chen2022,Shi2023}. It is supported by Java (Quicktheories\footnote{https://github.com/quicktheories/QuickTheories, accessed: 2024-01-21}), coq (QuickChick\footnote{https://github.com/QuickChick/QuickChick, accessed: 2024-01-21}), Scala (ScalaCheck\footnote{https://scalacheck.org/, accessed: 2024-01-21}), Erlang (QuickCheck\footnote{http://www.quviq.com/products/erlang-quickcheck/, accessed: 2024-01-21} and PropEr\footnote{https://proper-testing.github.io/, accessed: 2024-01-21}), Haskell (QuickCheck\footnote{https://hackage.haskell.org/package/QuickCheck, accessed: 2024-01-21}), OCaml (QCheck\footnote{https://github.com/c-cube/qcheck/, accessed: 2024-01-21} and Crowbar\footnote{https://github.com/stedolan/crowbar, accessed: 2024-01-21}) to name a few examples~\cite{MacIver2016,Padhye2019,Paraskevopoulou2015,Arts2008,Papadakis2011,Claessen2000}. Obviously many of these were inspired by QuickCheck, being the tool popularising PBT. However, this study focuses on Hypothesis\footnote{https://hypothesis.works/, accessed: 2024-01-21}, a Python-based PBT implementation framework. This framework has recently attracted significant attention~\cite{Corgozinho2023,MacIver2019}, is compatible with pytest and unittest\footnote{https://docs.python.org/3/library/unittest.html, accessed: 2024-01-21}, as well as being open source under the Mozilla Public License 2.0\footnote{https://hypothesis.works/products/, accessed: 2024-01-21}.
 
 \subsection{Prototype of Data Analysis Scripts using Hypothesis for Python}
 \subsubsection{Overview}
-Hypothesis is a Python library for Property-Based Testing. The aim is to have a simple manner in which software can be tested. In traditional unit testing the focus is on performing the function and asserting something about the result. With Hypothesis, the focus is on trying to make the assertions hold for all data matching a certain specification.
+Hypothesis is a Python library for property-based testing, aiming to simplify software testing. Contrary to traditional unit testing, which concentrates on executing a function and asserting specific outcomes, Hypothesis shifts the focus towards ensuring that assertions hold across all data conforming to a predefined specification.
 
-The advantages are that Hypothesis helps to discover edge cases and hidden bugs which one might not think of during typical testing. It also helps to make the tests more robust, seeing as a wide variety of inputs, some even random, are used.
-Furthermore, it can help save time, by encompassing many traditional unit test cases into one PBT test case. And lastly, Hypothesis also integrates into other testing frameworks such as pytest and nose. In terms of disadvantages, Hypothesis might lead to longer execution times of test suites. This is due to a Hypothesis test case generating many more subordinate test cases and running them. Although Hypothesis tries to reproduce the input that caused the test case to fail, this might not always work and it can therefore sometimes be challenging to understand why a test case failed.
-Lastly, one typically has less control when using PBT in comparison to a typical unit test.\footnote{https://hypothesis.readthedocs.io/en/latest/, accessed: 2024-01-10} The majority of these advantages and disadvantages correspond with the general advantages and disadvantages of PBT that can be found within the academic literature.
+This offers several advantages, inlcuding the identification of edge cases and hidden bugs not typically anticipated in standard testing procedures. The test robustness is enhanced by utilizing a wide variety of inputs, some of which are randomly generated. Additionally, it can consolidate multiple traditional unit test cases into a single PBT test case, potentially saving time. Hypothesis also seamlessly integrates with other testing frameworks, such as pytest and nose\footnote{https://nose.readthedocs.io/en/latest/, accessed: 2024-01-10}.
+
+However, there are drawbacks to consider. The execution times for test suites may increase due to Hypothesis generating and executing numerous subordinate test cases. While Hypothesis attempts to reproduce the input leading to test failures, understanding the cause of failure can sometimes be challenging. Moreover, PBT typically offers less control compared to traditional unit tests\footnote{https://hypothesis.readthedocs.io/en/latest/, accessed: 2024-01-10}. These pros and cons align with the general advantages and disadvantages of PBT as discussed in our literature study under section~\ref{sec:adv_disadv}.
 
 \subsubsection{Strategies and Data Generation}
-One of the main concepts of Hypothesis is the idea of search strategies. Search strategies refer to how Hypothesis will try to generate input for the test function. Or rather, what it will use to `search' for bugs. Hypothesis has plenty of different search strategies that can be used. For instance, it can generate text, floats, integers, boolean values, a value of a given set of values and values that match a given regex. Furthermore, these search strategies can be refined by input parameters. This can, for instance, limit the size of the floats generated or only allow dates between certain ranges.
+A central concept within Hypothesis is the utilisation of search strategies. These strategies refer to \textit{how} Hypothesis will try to generate inputs for test functions. Or rather, \textit{what} it will use to search for bugs. For that, Hypothesis is equipped with a diverse set of search strategies, enabling it to generate various types of data, including text, floats, integers, boolean values, values from specified sets, and values conforming to given regular expressions. Furthermore, it is possible to refine these strategies using input parameters. Such refinements can include constraints like limiting the range of generated float values or specifying permissible date ranges.
 
-The format of using a search strategy in Hypothesis is consistent. Typically, an object representing a search strategy is instantiated using the syntax \texttt{st.(type)}, where \texttt{type} is the specific search strategy to use (e.g., \texttt{text}, \texttt{float}, \texttt{date}). The instantiation can be further refined by specifying parameters. The parameters can for instance, limit the dates to a certain range or only generate floats up to a certain size. By default, Hypothesis will try to create 100 different tests.
+The implementation of search strategies within Hypothesis adheres to a consistent format. Typically, a search strategy object is instantiated using the syntax \texttt{st.(type)}, where \texttt{type} indicates the desired search strategy, such as \texttt{text}, \texttt{float}, or \texttt{date}. This instantiation process allows for further refinement through the specification of parameters. These parameters can impose constraints, for example, restricting dates to a specified range or generating floats with a maximum size limit. By default, Hypothesis is configured to generate a series of 100 distinct tests for each defined strategy.
 
-\subsubsection{Hypothesis Usage}
-In order to use Hypothesis, one first needs to install the Hypothesis package. This can be done by using the command \texttt{`pip install hypothesis'}. The specific setup used is as follows:
-
+\subsubsection{Installation}
+In order to use Hypothesis, the package must first be installed using Python's package installer pip. This can be done by executing the command \fbox{\texttt{pip install hypothesis}}. The specific configuration used in this study is described as follows:
 \begin{itemize}
   \item Operating System: Ubuntu 22.04.3 LTS
   \item Python Version: 3.10.12
   \item pip Version: 22.0.2
   \item Hypothesis Version: 6.92.2
 \end{itemize}
-However, Hypothesis officially tries to support the latest version of Python.\footnote{https://hypothesis.readthedocs.io/en/latest/, accessed: 2024-01-10}
+It is worth noting that the Hypothesis team is officially committed to supporting the latest version of Python.\footnote{https://hypothesis.readthedocs.io/en/latest/, accessed: 2024-01-10}
 
-\vspace{5mm}
-\noindent Consider the following code extract:
-\begin{lstlisting}[language=Python,caption={Basic Test from \texttt{tutorial.ipynb}}]
+\subsubsection{Usage}
+To understand the use of Hypothesis, consider the following basic test shown in code example~\ref{lst:basic_test}:
+\begin{lstlisting}[language=Python,caption={Basic Test from \texttt{tutorial.ipynb}},label=lst:basic_test]
   from hypothesis import given
   import hypothesis.strategies as st
 
@@ -173,14 +174,14 @@ However, Hypothesis officially tries to support the latest version of Python.\fo
 
   test_builtin_abs()
 \end{lstlisting}
-The main way in which the Hypothesis test is annotated, is using the \texttt{given} decorator. The \texttt{given} decorator takes a search strategy object and uses this to populate the parameters of the function. In this case, integers are generated to be used as input to the $x$ parameter of the function.
+The primary method of annotating a Hypothesis test involves the \texttt{given} decorator (line~4). This decorator accepts a search strategy object, utilizing it to supply values for the function's parameters. In the presented case, integers are generated as inputs for the parameter $x$ in line~5.
 
-This function then asserts that certain properties hold for each value of $x$ generated. In this example, it tests that the built-in absolute value function of Python works as intended.
+The test function then asserts that certain properties hold for each generated value of $x$. In this specific example, the test validates the correct functionality of Python's built-in absolute value function (lines~6--7).
 
 \vspace{5mm}
-\noindent Another key aspect of Hypothesis is being able to create new, unique search strategies. The following code block is an example of this:
+\noindent Another feature is the ability to create new, specialised search strategies. The following code example~\ref{lst:complex_inputs} illustrates the creation of complex inputs:
 
-\begin{lstlisting}[language=Python,caption={Complex Inputs from \texttt{tutorial.ipynb}}]
+\begin{lstlisting}[language=Python,caption={Complex Inputs from \texttt{tutorial.ipynb}},label=lst:complex_inputs]
   from hypothesis.strategies import composite
 
   PI = 3.14159
@@ -190,8 +191,8 @@ This function then asserts that certain properties hold for each value of $x$ ge
     decimal = draw(st.floats(max_value=PI))
     text = draw(
       st.text(alphabet=st.characters
-      (whitelist_categories=['Lu']), 
-    min_size=2, max_size=5))
+          (whitelist_categories=['Lu']),
+          min_size=2, max_size=5))
     return decimal, text
 
   @given(custom_input_generator())
@@ -202,12 +203,12 @@ This function then asserts that certain properties hold for each value of $x$ ge
     assert len(text) >= 2 and len(text) <= 5
     assert text.isupper()
 \end{lstlisting}
-The \texttt{composite} decorator is used to specify a function that generates a custom search strategy. The function works by combining existing search strategies. So in the above, the float search strategy is used to generate floats up until a max value of $\pi$. Then, the text search strategy is used to generate text that consists of only upper-case letters and is between 2 and 5 characters long. The test function simply tests that the search strategy generation function generates output of the correct form.
+The \texttt{composite} decorator (line~5) is utilised to define a function for generating a customized search strategy, achieved by combining existing strategies. In the example above, the float search strategy is used to generate floats with a maximum value of $\pi$ in line~7. Then, the text search strategy is used to create strings consisting solely of uppercase letters (line~10), with a length contraint of 2--5 characters (line~11). The test function (line~14--20) then asserts that the generated decimal and text adhere to the specified structure and constraints.
 
 \vspace{5mm}
-\noindent In order to improve test robustness, it can be useful to increase the number of tests generated. Furthermore, generating large amounts of random input helps to approximate formal verification. The number of test cases that are generated can be changed with the \texttt{settings} decorator and the \texttt{max\_samples} property:
+\noindent Improving the robustness of tests can be achieved by increasing the number of test cases generated as shown in code example~\ref{lst:test_case_amount} below:
 
-\begin{lstlisting}[language=Python,caption={Specifying Test Case Amount from \texttt{tutorial.ipynb}}]
+\begin{lstlisting}[language=Python,caption={Specifying Test Case Amount from \texttt{tutorial.ipynb}},label=lst:test_case_amount]
   from hypothesis import settings
 
   @settings(max_examples=100)
@@ -216,18 +217,19 @@ The \texttt{composite} decorator is used to specify a function that generates a 
     ...|\Reactivatenumber{9}|
 
 \end{lstlisting}
+This approach not only helps to improve test coverage, but also approximates formal verification by generating a large amount of random input. The test quantity generated can be adjusted using the \texttt{settings} decorator in line~3.
 
-\noindent Globally this can be done as follows in the beginning of the Python test file:
-\begin{lstlisting}[language=Python,caption={Specifying Test Case Amount from \texttt{tutorial.ipynb}}]
+To apply this setting globally at the beginning of a Python file, the following approach in code example~\ref{lst:settings} can be used:
+
+\begin{lstlisting}[language=Python,caption={Global Settings from \texttt{tutorial.ipynb}},label=lst:settings]
   settings.register_profile("default", max_examples=100)
   settings.load_profile("default")
 \end{lstlisting}
 
-\noindent Lastly, another useful feature of Hypothesis is the ability to specify a seed. When using a seed, the test cases generated by Hypothesis will always be identical. This eliminates the random element. Seeds can be helpful to debug code, because Hypothesis will try to determine and present the specific seed that caused the program to fail. It might also be useful to have, in addition to randomized tests, specific seeds in the test suite in order to improve testing reliability. A seed can be set using the \texttt{seed} decorator and a specific seed value.
+\vspace{5mm}
+\noindent Another useful feature of Hypothesis is its capability to specify a seed, ensuring reproducibility of test cases as demonstrated in the following code example~\ref{lst:seeds}:
 
-\newpage
-\noindent Here is an example:
-\begin{lstlisting}[language=Python,caption={Specifying Seeds from \texttt{tutorial.ipynb}}]
+\begin{lstlisting}[language=Python,caption={Specifying Seeds from \texttt{tutorial.ipynb}},label=lst:seeds]
   from hypothesis import given, seed
   import hypothesis.strategies as st
 
@@ -237,25 +239,27 @@ The \texttt{composite} decorator is used to specify a function that generates a 
   ...|\Reactivatenumber{11}|
 
 \end{lstlisting}
+The \texttt{seed} decorator (line~4), along with a designated seed value, is used to set a seed. By setting a seed, Hypothesis generates a consistent set of test cases, thereby eliminating the element of randomness. This is particularly helpful for debugging purposes, as Hypothesis can identify and present the specific seed that led to a failure. Additionally, incorporating specific seeds into a test suite, alongside randomized tests, can enhance testing reliability. 
 
 \subsubsection{Integration with pytest}
-The integration with pytest is automatic. It is sufficient to run pytest in the traditional sense, as pytest will automatically recognize the Hypothesis tests. In the \texttt{tutorial.ipynb} notebook this is illustrated. It can be seen that pytest correctly identified the Hypothesis test. However it is important to note that pytest registers a Hypothesis test as a single test. In actuality, multiple tests are run. By using the optional \texttt{`-{}-hypothesis-show-statistics'} flag, one can get more detailed information specific to Hypothesis.
+The integration of Hypothesis with pytest is seamless. To initiate the testing process, simply run the command \fbox{\texttt{pytest}}, which will automatically detect and run the Hypothesis tests. This automatic detection is exemplified in the \texttt{tutorial.ipynb} notebook, where it can be observed that pytest accurately identifies Hypothesis tests. However, it is crucial to recognize that although pytest registers a Hypothesis test as a singular test entity, in reality, it executes multiple underlying tests.
 
 \vspace{5mm}
-\noindent The returned output could look like this:
+\noindent For acquiring more in-depth information regarding Hypothesis, the optional flag \texttt{-{}-hypothesis-show-statistics} can be utilised. As shown in the output below, this flag displays detailed information specific to Hypothesis testing:
 \begin{verbatim}
-====================== Hypothesis Statistics ======================
-test.py::test_builtin_abs:
+  ============== Hypothesis Statistics ==============
+  test.py::test_builtin_abs:
 
-  - during generate phase (0.02 seconds):
-    - Typical runtimes: < 1ms, of which < 1ms in data generation
-    - 100 passing examples, 0 failing examples, 0 invalid examples
-
-  - Stopped because settings.max_examples=100
+    - during generate phase (0.02 seconds):
+      - Typical runtimes: < 1ms, of which < 1ms
+        in data generation
+      - 100 passing examples, 0 failing examples,
+        0 invalid examples
+    - Stopped because settings.max_examples=100
 \end{verbatim}
 
 \subsubsection{Application for Data Analysis Scripts}
-Hypothesis can be used to test data analysis scripts. In particular, Hypothesis can be helpful to ensure that the data preparation and data cleaning steps are properly tested. This is due to Hypothesis being able to simulate a wide range of inputs, which can then be used to ensure that the functions are robust. In the following, we will apply Hypothesis to an exemplary astronaut data analysis script~\cite{Stoffers2021} from the DLR.
+Hypothesis can be used to test data analysis scripts. In particular, Hypothesis can be helpful to ensure that the data preparation and cleaning steps are properly tested. This is due to Hypothesis being able to simulate a wide range of inputs, which can then be used to increase robustness of the functions. In the following, we will apply Hypothesis to an exemplary astronaut data analysis script~\cite{Stoffers2021} from the DLR.
 
 \newpage
 \noindent The first function that will be examined is the \texttt{calculate\_age} function:
@@ -307,7 +311,7 @@ The test generates random dates between the 1st of January 1920 and the current 
 \end{lstlisting}
 Hypothesis is well suited to test even a complicated function like the above. The focus will be on generating appropriate inputs for the \texttt{prepare\_data\_set} function:
 
-\begin{lstlisting}[language=Python,caption={Prepare Data Set from \texttt{data\_analysis.ipynb}}]
+\begin{lstlisting}[language=Python,caption={Prepare Data Set from \texttt{data\_analysis.ipynb}},label=lst:prep_data_set]
   @st.composite
   def astronaut_data(draw) -> dict:
     astronaut = draw(st.from_regex(r"http://www\.wikidata\.org/entity/Q\d+", fullmatch=True))
@@ -325,22 +329,24 @@ Hypothesis is well suited to test even a complicated function like the above. Th
     ...|\Reactivatenumber{40}|
 
 \end{lstlisting}
-This function generates a wide variety of inputs. Specifically, it generates an astronaut link and label using regex search strategies. It then generates a birthdate that falls within a certain range using the \texttt{st.dates} strategy and specifying the date range. The \texttt{sex\_or\_genderLabel} is then generated using \texttt{st.sampled} which then allows Hypothesis to generate input using the values \texttt{male} and \texttt{female}. The time in space is then generated using \texttt{st.integers} and confined to a given range. Then the date of death is used by combining two strategies, \texttt{st.none} and \texttt{st.dates}, of which one will be selected. The birthdate and, if present, death date are then transformed into the corresponding format that the data preparation script expects. This shows how Hypothesis can be used to generate complex inputs which can then be used to test data analysis scripts.
+The \texttt{astronaut\_data} function from \ref{lst:prep_data_set} generates a wide variety of inputs. Specifically, lines~3--4 generate an astronaut link and label using regex search strategies. Line~5 generate a birthdate that falls within a certain range using the \texttt{st.dates} strategy with a specified date range. The sex or gender label is then generated using \texttt{st.sampled} in line~7 which generates input from the values male and female. The time in space in line~8 is then generated using \texttt{st.integers} and confined to a given range. In lines~9--13 the date of death is generated by combining two strategies, \texttt{st.none} and \texttt{st.dates}, of which one will be selected. The birthdate and, if present, death date are then transformed into the corresponding format that the data preparation script expects. This shows how Hypothesis can be used to generate complex inputs which can then be used to test data analysis scripts.
 
 \subsubsection{Discovering Issues}
-Hypothesis can also be very helpful in finding potential bugs and making data analysis scripts more robust. In particular, by removing the max value of the time in space strategy, Hypothesis will trigger the data analysis script to crash. The following output is returned:
+Hypothesis can also be very helpful in finding potential bugs and making data analysis scripts more robust. In particular, by removing the max value of the time in space strategy, Hypothesis will trigger the data analysis script to crash.
 
+\vspace{5mm}
+\noindent The following error message gets returned:
 \begin{verbatim}
-OverflowError: Python int too large to convert to C long
-Falsifying example: test_prepare_data_set(
-    data=[{'astronaut': 'http://www.wikidata.org/entity/Q0',
-      'astronautLabel': 'Aa Aa',
-      'birthdate': '2000-01-01T00:00:00Z',
-      'birthplaceLabel': 'Aa',
-      'sex_or_genderLabel': 'male',
-      'time_in_space': 18446744073709551616,
-      'date_of_death': '2000-01-02T00:00:00Z'}],
-  )
+  OverflowError: Python int too large to convert to C long
+  Falsifying example: test_prepare_data_set(
+      data=[{'astronaut': 'http://www.wikidata.org/entity/Q0',
+        'astronautLabel': 'Aa Aa',
+        'birthdate': '2000-01-01T00:00:00Z',
+        'birthplaceLabel': 'Aa',
+        'sex_or_genderLabel': 'male',
+        'time_in_space': 18446744073709551616,
+        'date_of_death': '2000-01-02T00:00:00Z'}],
+    )
 \end{verbatim}
 
 \noindent This specific error can be traced back to line~7:
@@ -350,7 +356,7 @@ Falsifying example: test_prepare_data_set(
   ...|\Reactivatenumber{5}|
   # Set pandas dtypes for columns with date or time
   df = df.dropna(subset=["time_in_space"])
-  df["time_in_space"] = df["time_in_space"].astype(int) # This line caused the error
+  df["time_in_space"] = df["time_in_space"].astype(int)  # This line caused the error
   df["time_in_space"] = pd.to_timedelta(df["time_in_space"], unit="m")
   df["birthdate"] = pd.to_datetime(df["birthdate"])
   df["date_of_death"] = pd.to_datetime(df["date_of_death"])
@@ -389,14 +395,14 @@ Moreover, with the help of this prototype, Hypothesis was applied to an exemplar
 
 PBT fundamentally is a method that relies less on technical know-how and more on logical specifications of systems, thereby likely fostering collaboration between software developers and testers. However, the known drawbacks of PBT were also evident. Specifically, the increased effort required to develop specialised input generators and a potential reduction in testing efficiency should be noted.
 
-The applicability of Hypothesis in the context of DLR is therefore conceivable. However, the scope of this work is limited as it only represents a relatively simple use case. We have demonstrated the basic functionality of Hypothesis and its application to an exemplary analysis script. In order to fully assess its suitability as a complement to established testing methods and its potential benefits for DLR, further structured and comprehensive use cases need to be investigated. This will lead to a more definitive understanding of the role and value of PBT in improving software testing practices in research-intensive environments such as the DLR.
+The applicability of Hypothesis in the context of the DLR is therefore conceivable. However, the scope of this work is limited as it only represents a relatively simple use case. We have demonstrated the basic functionality of Hypothesis and its application to an exemplary analysis script. In order to fully assess its suitability as a complement to established testing methods and its potential benefits for the DLR, further structured and comprehensive use cases need to be investigated. This will lead to a more definitive understanding of the role and value of PBT in improving software testing practices in research-intensive environments such as the DLR.
 
 \section{Conclusion}
 In this study, we have explored and applied the method of PBT, enriching our understanding with insights from existing research and an introduction to the Hypothesis framework. It presents notable advantages, by offering capabilities for automated and randomised generation of test inputs to test general properties of systems. PBT proposes a way to supplement traditional testing methods, significantly enhancing the reliability of developed systems.
 
 In addition, our prototype demonstrated a potential application for PBT in the context of data analysis scripts at the DLR. This practical example implies the possible benefits and utility of PBT in real-world research settings.
 
-However, it is important to acknowledge the limitations of our study, primarily due to the narrow scope of our prototype. The results we have presented here are preliminary and need to be further validated by applying PBT to a broader range of test cases and larger-scale projects. This will enable a more comprehensive understanding of the effectiveness of PBT and its potential to transform software testing practices, particularly in complex and data-intensive research environments like those at DLR. This future work will be crucial in fully realising the benefits of PBT for enhancing software reliability and confidence in research outcomes.
+However, it is important to acknowledge the limitations of our study, primarily due to the narrow scope of our prototype. The results we have presented here are preliminary and need to be further validated by applying PBT to a broader range of test cases and larger-scale projects. This will enable a more comprehensive understanding of the effectiveness of PBT and its potential to transform software testing practices, particularly in complex and data-intensive research environments like those at the DLR. This future work will be crucial in fully realising the benefits of PBT for enhancing software reliability and confidence in research outcomes.
 
 %
 % ---- Bibliography ----
