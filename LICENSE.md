@@ -1,6 +1,6 @@
 ## License
 
-Copyright © 2023 Jean-Sebastian de Wet, Jan-Philipp Kiel, Pascal Mager
+Copyright © 2024 Jean-Sebastian de Wet, Jan-Philipp Kiel, Pascal Mager
 
 This work is licensed under multiple licenses:
 - The code is licensed under [MIT](LICENSES/MIT.txt).
