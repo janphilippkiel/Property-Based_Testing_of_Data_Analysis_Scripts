@@ -42,6 +42,7 @@
 			"*.xdv",
 			"*.fdb_latexmk",
 			"__latexindent_temp.tex",
-		]
+		],
+		"ltex.language": "en-GB"
 	}
 }
